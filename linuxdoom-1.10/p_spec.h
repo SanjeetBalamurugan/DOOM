@@ -330,7 +330,7 @@ typedef enum
     normal,
     close30ThenOpen,
     close,
-    open,
+    doorOpen,
     raiseIn5Mins,
     blazeRaise,
     blazeOpen,

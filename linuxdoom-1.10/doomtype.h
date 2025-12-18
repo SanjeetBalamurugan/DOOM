@@ -39,7 +39,18 @@ typedef unsigned char byte;
 
 // Predefined with some OS.
 #ifdef LINUX
-#include <values.h>
+#include <limits.h>
+#include <float.h>
+
+#ifndef MAXINT
+#define MAXINT INT_MAX
+#endif
+
+#ifndef MININT
+#define MININT INT_MIN
+#endif
+
+
 #else
 #define MAXCHAR		((char)0x7f)
 #define MAXSHORT	((short)0x7fff)

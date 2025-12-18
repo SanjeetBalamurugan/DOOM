@@ -9,7 +9,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-but-set-variable")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-to-int-cast")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-const-variable")
 
-# Source files - you may need to exclude X11-specific files
+# Source files
 file(GLOB SOURCES "*.c")
 
 # list(REMOVE_ITEM SOURCES 

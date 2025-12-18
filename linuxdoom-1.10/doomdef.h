@@ -26,6 +26,16 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <limits.h>
+#ifndef MAXSHORT
+#define MAXSHORT SHRT_MAX
+#endif
+
+#ifndef MINSHORT
+#define MINSHORT SHRT_MIN
+#endif
+
+
 //
 // Global parameters/defines.
 //

@@ -47,6 +47,9 @@ rcsid[] = "$Id: m_bbox.c,v 1.1 1997/02/03 22:45:10 b1 Exp $";
 #endif
 #include "i_net.h"
 
+#ifndef IPPORT_USERRESERVED
+#define IPPORT_USERRESERVED 5000
+#endif
 
 
 
