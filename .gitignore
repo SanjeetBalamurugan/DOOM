@@ -1,0 +1,53 @@
+# Build directories
+build/
+cmake-build-*/
+lib/
+linux/
+bin/
+out/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# Object files
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+
+# Executables
+linuxxdoom
+doomheadless
+*.exe
+*.out
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Doom specific
+*.wad
+*.deh
+*.lmp
+doom.log
+doomsav*.dsg
+
+# Debug files
+*.dSYM/
+*.pdb
+*.ilk
+
+# Backup files
+*.bak
+*~
