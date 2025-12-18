@@ -18,3 +18,8 @@ target_link_libraries(doom_sandbox
 set_target_properties(doom_sandbox PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
+
+option(DOOM_DEBUG "Enable debug output" OFF)
+if(DOOM_DEBUG)
+    target_compile_definitions(doom_sandbox PRIVATE DOOM_DEBUG)
+endif()

@@ -80,8 +80,7 @@ static const char rcsid[] = "$Id: d_main.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 //
 // D-DoomLoop()
 // Not a globally visible function,
-//  just included for source reference,
-//  called by D_DoomMain, never exits.
+//  just included for source reference.
 // Manages timing and IO,
 //  calls all ?_Responder, ?_Ticker, and ?_Drawer,
 //  calls I_GetTime, I_StartFrame, and I_StartTic
@@ -1137,14 +1136,12 @@ void D_DoomMain (void)
     {
 	singledemo = true;              // quit after one demo
 	G_DeferedPlayDemo (myargv[p+1]);
-	D_DoomLoop ();  // never returns
     }
 	
     p = M_CheckParm ("-timedemo");
     if (p && p < myargc-1)
     {
 	G_TimeDemo (myargv[p+1]);
-	D_DoomLoop ();  // never returns
     }
 	
     p = M_CheckParm ("-loadgame");
@@ -1167,5 +1164,5 @@ void D_DoomMain (void)
 
     }
 
-    D_DoomLoop ();  // never returns
+    I_InitGraphics ();
 }
