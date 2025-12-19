@@ -17,20 +17,29 @@ extern int myargc;
 extern char** myargv;
 extern boolean nodrawers;
 
+extern int maketic;
+extern ticcmd_t netcmds[MAXPLAYERS][BACKUPTICS];
+
 void D_Display(void);
+void D_PostEvent(event_t* ev);
+void I_StartTic(void);
+void D_ProcessEvents(void);
+void G_BuildTiccmd(ticcmd_t* cmd);
 
 void DOOM_Init(int argc, char** argv) {
     myargc = argc;
     myargv = argv;
-    
     nodrawers = false;
-    
     D_DoomMain();
 }
 
 void DOOM_RunTic(void) {
+    I_StartTic();
+    D_ProcessEvents();
+    G_BuildTiccmd(&netcmds[consoleplayer][maketic % BACKUPTICS]);
     G_Ticker();
     gametic++;
+    maketic++;
 }
 
 void DOOM_RenderFrame(void) {
@@ -68,31 +77,55 @@ int DOOM_GetLevelTime(void) {
 void DOOM_SaveFramePNG(const char* filename) {
     byte* screen = DOOM_GetScreenBuffer();
     byte* palette = DOOM_GetPalette();
-    
-    if (!screen || !palette) {
-        printf("Error: Screen or palette is NULL\n");
-        return;
-    }
-    
     int width = DOOM_GetScreenWidth();
     int height = DOOM_GetScreenHeight();
-    
     unsigned char* rgb_data = (unsigned char*)malloc(width * height * 3);
-    if (!rgb_data) {
-        printf("Error: Failed to allocate RGB buffer\n");
-        return;
-    }
-    
     for (int i = 0; i < width * height; i++) {
         byte index = screen[i];
         rgb_data[i * 3 + 0] = palette[index * 3 + 0];
         rgb_data[i * 3 + 1] = palette[index * 3 + 1];
         rgb_data[i * 3 + 2] = palette[index * 3 + 2];
     }
-    
-    if (!stbi_write_png(filename, width, height, 3, rgb_data, width * 3)) {
-        printf("Error: Failed to write PNG %s\n", filename);
-    }
-    
+    stbi_write_png(filename, width, height, 3, rgb_data, width * 3);
     free(rgb_data);
+}
+
+void DOOM_KeyDown(int key) {
+    event_t event;
+    event.type = ev_keydown;
+    event.data1 = key;
+    event.data2 = 0;
+    event.data3 = 0;
+    D_PostEvent(&event);
+}
+
+void DOOM_KeyUp(int key) {
+    event_t event;
+    event.type = ev_keyup;
+    event.data1 = key;
+    event.data2 = 0;
+    event.data3 = 0;
+    D_PostEvent(&event);
+}
+
+void DOOM_MouseMove(int x, int y) {
+    event_t event;
+    event.type = ev_mouse;
+    event.data1 = 0;
+    event.data2 = x << 2;
+    event.data3 = y << 2;
+    D_PostEvent(&event);
+}
+
+void DOOM_MouseButton(int button, boolean pressed) {
+    event_t event;
+    event.type = ev_mouse;
+    event.data1 = pressed ? (1 << button) : 0;
+    event.data2 = 0;
+    event.data3 = 0;
+    D_PostEvent(&event);
+}
+
+void DOOM_SendKeyPress(int key) {
+    DOOM_KeyDown(key);
 }
