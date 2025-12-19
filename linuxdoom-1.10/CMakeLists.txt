@@ -12,10 +12,8 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-const-variable")
 # Source files
 file(GLOB SOURCES "*.c")
 
-# list(REMOVE_ITEM SOURCES 
-#     "${CMAKE_CURRENT_SOURCE_DIR}/i_video.c"
-#     "${CMAKE_CURRENT_SOURCE_DIR}/i_x.c"
-# )
+# Add doom_lib.c explicitly
+list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/doom_lib.c")
 
 add_library(doomheadless STATIC ${SOURCES})
 
@@ -30,6 +28,3 @@ target_link_libraries(doomheadless
 install(TARGETS doomheadless
     ARCHIVE DESTINATION lib
 )
-
-# file(GLOB HEADERS "*.h")
-# install(FILES ${HEADERS} DESTINATION include/doomheadless)
